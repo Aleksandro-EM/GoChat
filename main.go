@@ -3,14 +3,19 @@ package main
 import (
 	"GoChat/database"
 	"GoChat/models"
-	"log"
 )
 
 func main() {
 	db := database.Connect()
-	err := db.AutoMigrate(&models.User{})
-	if err != nil {
-		log.Fatal("Unable to migrate users table")
-	}
+
+	// Auto-migrate all tables
+	db.AutoMigrate(
+		&models.User{},
+		&models.Chat{},
+		&models.ChatMember{},
+		&models.Message{},
+		&models.Webhook{},
+		&models.WebhookLog{},
+	)
 	print("Connected to Database!")
 }
